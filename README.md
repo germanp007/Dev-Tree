@@ -5,7 +5,7 @@ DevTree es una aplicación moderna y eficiente desarrollada con React, Node.js (
 - **Interfaz intuitiva**: Diseño moderno y amigable para facilitar la navegación.
 - **Personalización**: Personaliza el estilo y la apariencia de tu perfil de enlaces.
 - **Rendimiento óptimo**: Aplicación rápida y eficiente gracias al uso de React, Node.js y TypeScript.
-- - **Seguridad**: Integración de medidas de seguridad para proteger la información de los usuarios.
+- **Seguridad**: Integración de medidas de seguridad para proteger la información de los usuarios.
 
 ## 💡 Tecnologías utilizadas 
 - **Frontend**: React con TypeScript
