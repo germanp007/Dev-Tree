@@ -25,3 +25,4 @@ Estilo: Tailwind CSS (o cualquier librería de estilos que estés usando)
 Base de datos: (Si usas una base de datos, inclúyela aquí, como MongoDB, PostgreSQL, etc.)
 
 Control de versiones: Git y GitHub
+
