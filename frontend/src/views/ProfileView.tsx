@@ -11,7 +11,6 @@ export default function ProfileView() {
 
   const {
     register,
-    reset,
     handleSubmit,
     formState: { errors },
   } = useForm<ProfileForm>({
@@ -49,10 +48,11 @@ export default function ProfileView() {
     },
   });
 
-  const handleUserProfileForm = (formData: ProfileForm) => {
-    console.log(formData, "Formdata");
-    updateProfileMutation.mutate(formData);
-    reset();
+  const handleUserProfileForm = async (formData: ProfileForm) => {
+    const user: User = queryClient.getQueryData(["user"])!;
+    user.description = formData.description;
+    user.handle = formData.handle;
+    updateProfileMutation.mutate(user);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
