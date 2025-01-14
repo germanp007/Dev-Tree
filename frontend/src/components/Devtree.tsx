@@ -1,13 +1,45 @@
 import { Link, Outlet } from "react-router-dom";
 import { Toaster } from "sonner";
+import { DndContext, DragEndEvent, closestCenter } from "@dnd-kit/core";
+import {
+  SortableContext,
+  verticalListSortingStrategy,
+  arrayMove,
+} from "@dnd-kit/sortable";
 import NavigationTabs from "./NavigationTag";
-import { User } from "../types";
+import { SocialNetwork, User } from "../types";
+import { useEffect, useState } from "react";
+import DevTreeLink from "./DevTreeLink";
 
 type DevtreeProps = {
   data: User;
 };
 
 const Devtree = ({ data }: DevtreeProps) => {
+  const [enabledLinks, setEnabledLinks] = useState<SocialNetwork[]>(
+    JSON.parse(data.links).filter((item: SocialNetwork) => item.enabled)
+  );
+
+  useEffect(() => {
+    setEnabledLinks(
+      JSON.parse(data.links).filter((item: SocialNetwork) => item.enabled)
+    );
+  }, [data]);
+
+  const handleDragEnd = (e: DragEndEvent) => {
+    const { over, active } = e;
+
+    if (over && over.id) {
+      const currentIndex = enabledLinks.findIndex(
+        (item) => item.id === active.id
+      );
+      const newIndex = enabledLinks.findIndex((item) => item.id === over.id);
+
+      const order = arrayMove(enabledLinks, currentIndex, newIndex);
+      setEnabledLinks(order);
+    }
+  };
+
   return (
     <>
       <header className="bg-slate-800 py-5">
@@ -55,6 +87,21 @@ const Devtree = ({ data }: DevtreeProps) => {
               <p className="text-lg text-slate-200 text-center">
                 {data.description}
               </p>
+              <DndContext
+                collisionDetection={closestCenter}
+                onDragEnd={handleDragEnd}
+              >
+                <div className="mt-20 flex flex-col gap-5">
+                  <SortableContext
+                    items={enabledLinks}
+                    strategy={verticalListSortingStrategy}
+                  >
+                    {enabledLinks.map((ele) => (
+                      <DevTreeLink key={ele.name} link={ele} />
+                    ))}
+                  </SortableContext>
+                </div>
+              </DndContext>
             </div>
           </div>
         </main>
