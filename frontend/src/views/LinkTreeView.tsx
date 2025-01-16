@@ -33,8 +33,6 @@ const LinkTree = () => {
       }
       return item;
     });
-    console.log(devTreeLinks, "Datos desde la Api");
-    console.log(JSON.parse(user.links), "USER desde la Api");
     setDevTreeLinks(updatedFromApi);
   }, []);
 
@@ -66,7 +64,7 @@ const LinkTree = () => {
     if (selectedSocialNetwork?.enabled) {
       const id = links.filter((ele) => ele.id).length + 1;
       if (links.some((ele) => ele.name === socialNetwork)) {
-        updatedSocialNetwork.map((link) => {
+        updatedSocialNetwork = links.map((link) => {
           if (link.name === socialNetwork) {
             return {
               ...link,
@@ -79,7 +77,7 @@ const LinkTree = () => {
         });
       } else {
         const newItem = {
-          id: links.length + 1,
+          id,
           ...selectedSocialNetwork,
         };
         updatedSocialNetwork = [...links, newItem];
@@ -95,7 +93,11 @@ const LinkTree = () => {
             id: 0,
             enabled: false,
           };
-        } else if (ele.id > indexToUpdate) {
+        } else if (
+          ele.id > indexToUpdate &&
+          indexToUpdate !== 0 &&
+          ele.id === 1
+        ) {
           return {
             ...ele,
             id: ele.id - 1,
@@ -124,7 +126,7 @@ const LinkTree = () => {
       ))}
       <button
         className="bg-cyan-400 p-2 text-lg font-bold w-full uppercase text-slate-600"
-        onClick={() => mutate(user)}
+        onClick={() => mutate(queryClient.getQueryData(["user"])!)}
       >
         Guardar Cambios
       </button>
