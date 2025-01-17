@@ -7,6 +7,10 @@ export type User = {
   image: string;
   links: string;
 };
+export type UserHandle = Pick<
+  User,
+  "description" | "handle" | "image" | "links"
+>;
 
 export type RegisterForm = Pick<User, "handle" | "email" | "name"> & {
   password: string;
