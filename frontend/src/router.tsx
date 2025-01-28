@@ -7,6 +7,7 @@ import LinkTree from "./views/LinkTreeView";
 import ProfileView from "./views/ProfileView";
 import HandleView from "./views/HandleView";
 import NotFound from "./views/NotFound";
+import HomeView from "./views/HomeView";
 
 export const Router = () => {
   return (
@@ -23,6 +24,7 @@ export const Router = () => {
         <Route path="/:handle" element={<AuthLayout />}>
           <Route element={<HandleView />} index={true} />
         </Route>
+        <Route path="/" element={<HomeView />} />
         <Route path="/404" element={<AuthLayout />}>
           <Route element={<NotFound />} index={true} />
         </Route>
